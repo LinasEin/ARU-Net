@@ -18,18 +18,18 @@ def run(path_list_train, path_list_val, output_folder, restore_path):
     # Images have to be gray scale images
     img_channels = 1
     # Number of output classes
-    n_class = 3
+    n_class = 2
     kwargs_dat = dict(batchsize_tr=1, scale_min=0.2, scale_max=0.5, scale_val=0.33, affine_tr=True,
                       one_hot_encoding=True)
     data_provider = Data_provider_la(path_list_train, path_list_val, n_class, kwargs_dat=kwargs_dat)
 
     # choose between 'u', 'ru', 'aru', 'laru'
-    model_kwargs = dict(model="ru")
+    model_kwargs = dict(model="aru")
     model = ARUnet(img_channels, n_class, model_kwargs=model_kwargs)
     opt_kwargs = dict(optimizer="rmsprop", learning_rate=0.001)
     cost_kwargs = dict(cost_name="cross_entropy")
     trainer = Trainer(model,opt_kwargs=opt_kwargs, cost_kwargs=cost_kwargs)
-    trainer.train(data_provider, output_folder, restore_path, batch_steps_per_epoch=256, epochs=100, gpu_device="0")
+    trainer.train(data_provider, output_folder, restore_path, batch_steps_per_epoch=1024, epochs=250, gpu_device="0")
 
 
 if __name__ == '__main__':

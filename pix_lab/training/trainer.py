@@ -85,6 +85,8 @@ class Trainer(object):
                 lr = 0
                 time_step_train = time.time()
                 for step in range(( epoch * batch_steps_per_epoch), (( epoch + 1 ) * batch_steps_per_epoch)):
+                    if step % 10 == 0 :
+                        print('Step', step)
                     batch_x, batch_tgt = data_provider.next_data('train')
                     skipped = 0
                     if batch_x is None:
